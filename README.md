@@ -87,11 +87,11 @@ RPC: https://k8s.testnet.json-rpc.injective.network
 
 ### 下单成功
 
-![Place Order Success](screenshots/place-order-success.png)
+![Place Order Success](https://github.com/Funghi88/spot-market-foundry/blob/main/place-order-success.png)
 
 ### 取消订单成功
 
-![Cancel Order Success](screenshots/cancel-order-success.png)
+![Cancel Order Success](https://github.com/Funghi88/spot-market-foundry/blob/main/cancel-order-success.png)
 
 
 ✅ 测试状态
