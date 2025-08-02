@@ -119,3 +119,14 @@ cast send \
   --chain-id 1439 \
   0xb9433ECCf417321198Fd8e9b7639422125bf8BE1 \
   "cancelOrder(uint256)" 1
+# Spot Market Foundry
+
+## 交互历史截图
+
+### 下单成功
+
+![Place Order Success](screenshots/place-order-success.png)
+
+### 取消订单成功
+
+![Cancel Order Success](screenshots/cancel-order-success.png)
