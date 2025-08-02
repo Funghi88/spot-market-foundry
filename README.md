@@ -20,105 +20,67 @@ spot-market-foundry/
 ├── foundry.toml # Foundry 配置
 └── README.md
 
-yaml
-复制
-编辑
 
 ---
 
-## ⚙️ 安装
+## 🚀 部署步骤
 
-```bash
-git clone https://github.com/<YOUR_USERNAME>/spot-market-foundry.git
-cd spot-market-foundry
-forge install
-🧪 本地测试
-bash
-复制
-编辑
-forge test
-输出示例：
+1. **安装依赖**
+   ```bash
+   forge install
 
-css
-复制
-编辑
-Ran 7 tests for SpotMarket and SpotOrderManager
-[PASS] all tests passed
-🚀 部署到 Injective 测试网
-准备环境变量
-
-在 .env 文件中填入：
-
-bash
-复制
-编辑
-PRIVATE_KEY=<你的钱包私钥>
-INJECTIVE_RPC_URL=https://k8s.testnet.json-rpc.injective.network
-编译合约
-
-bash
-复制
-编辑
+2.编译并测试
 forge build
-部署合约
+forge test
 
-bash
-复制
-编辑
+3. 部署合约
 cast send \
-  --rpc-url $INJECTIVE_RPC_URL \
+  --rpc-url https://k8s.testnet.json-rpc.injective.network \
   --private-key $PRIVATE_KEY \
   --chain-id 1439 \
-  --create $(cat out/SpotMarket.sol/SpotMarket.json | jq -r .bytecode.object)
-部署成功后返回：
+  --create $(cat SpotMarket.bin)
 
-合约地址: 0xb9433ECCf417321198Fd8e9b7639422125bf8BE1
+部署成功后会返回合约地址，例如：
+contractAddress  0xb9433ECCf417321198Fd8e9b7639422125bf8BE1
 
-交易哈希: 0xc685d5c308ba5e13f33f728f14e7cc12dedbd95f2f1471442d4bb3f2ebf2f837
-
-🔑 合约交互
-1️⃣ 获取 ABI
-bash
-复制
-编辑
-cat out/SpotMarket.sol/SpotMarket.json | jq -r .abi > SpotMarket.abi
-2️⃣ 下单
-bash
-复制
-编辑
+🛠️ 合约交互
+1️⃣ Place Order
 cast send \
-  --rpc-url $INJECTIVE_RPC_URL \
+  --rpc-url https://k8s.testnet.json-rpc.injective.network \
   --private-key $PRIVATE_KEY \
   --chain-id 1439 \
   0xb9433ECCf417321198Fd8e9b7639422125bf8BE1 \
   "placeOrder(uint8,uint256,uint256)" 0 1000 5
-0 = Buy
 
-1 = Sell
-
-1000 = 价格
-
-5 = 数量
-
-3️⃣ 获取当前订单 ID
-bash
-复制
-编辑
+2️⃣ 获取最新订单 ID
 cast call \
-  --rpc-url $INJECTIVE_RPC_URL \
+  --rpc-url https://k8s.testnet.json-rpc.injective.network \
   --chain-id 1439 \
   0xb9433ECCf417321198Fd8e9b7639422125bf8BE1 \
   -- "nextOrderId()(uint256)"
-4️⃣ 取消订单
-bash
-复制
-编辑
+
+输出 2 表示上一次下单的订单 ID 为 1
+
+3️⃣ Cancel Order
 cast send \
-  --rpc-url $INJECTIVE_RPC_URL \
+  --rpc-url https://k8s.testnet.json-rpc.injective.network \
   --private-key $PRIVATE_KEY \
   --chain-id 1439 \
   0xb9433ECCf417321198Fd8e9b7639422125bf8BE1 \
   "cancelOrder(uint256)" 1
+
+📝 部署信息
+合约地址: 0xb9433ECCf417321198Fd8e9b7639422125bf8BE1
+
+测试网链 ID: 1439
+
+RPC: https://k8s.testnet.json-rpc.injective.network
+
+区块浏览器: BlockScout
+
+📸 交互历史截图
+✅ Place Order 成功
+✅ Cancel Order 成功
 # Spot Market Foundry
 
 ## 交互历史截图
@@ -130,3 +92,20 @@ cast send \
 ### 取消订单成功
 
 ![Cancel Order Success](screenshots/cancel-order-success.png)
+
+
+✅ 测试状态
+通过 Foundry 测试：
+Ran 7 tests: all passed
+
+
+---
+
+你只需要：  
+1. 在本地创建 `screenshots/` 文件夹，放入 `place-order-success.png` 和 `cancel-order-success.png`。  
+2. 运行：
+   ```bash
+   git add screenshots/ README.md
+   git commit -m "add screenshots to README"
+   git push
+
